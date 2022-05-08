@@ -7,11 +7,11 @@
 #input-display{
   height: 150px;
   width: 50%;
-  float:left;
 }
 
 #panel {
   display: flex;
+  height: 100%;
 }
 
 input {
