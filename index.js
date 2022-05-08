@@ -7,18 +7,8 @@ let waypoints = [];
 let map;
 let geocoder;
 let markers = [];
-
-async function requestData(url) {
-  let response;
-  await axios.get(url, )
-  .then(async function (res) {
-    response = res.data;
-  }).catch(function (error) {
-    console.log(error);
-  });
-  return response;
-}
-
+let directionsService;
+let directionsRenderer;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -31,6 +21,9 @@ function initMap() {
   });
 
   geocoder = new google.maps.Geocoder();
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map)
 }
 
 async function addPoint() {
@@ -183,9 +176,34 @@ async function getDirections() {
   });
 
   url += `&key=${MAP_KEY}`
+  const waypts = []
+  waypoints.forEach((waypoint) => {
+    waypts.push({ location: waypoint.address, stopover: true })
+  });
 
-  const response = await requestData(url);
-  console.log(response)
+  let res;
+
+  await directionsService
+    .route({
+      origin: start.address,
+      destination: end.address,
+      waypoints: waypts,
+      optimizeWaypoints: true,
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    .then((response) => {
+      directionsRenderer.setDirections(response);
+      res = response;
+    })
+  
+  const legs = res.routes[0].legs;
+  let time = 0;
+  let distance = 0;
+  legs.forEach((leg) => { time += leg.duration.value; distance += leg.distance.value; });
+  time /= 60;
+  distance /= 1609.344;
+  
+  console.log(res);
 }
 
 window.initMap = initMap;
