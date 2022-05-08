@@ -90,7 +90,7 @@ async function addPoint() {
     let newText = `Stop ${waypoints.length}: ${address}`;
 
     const waypointsText = document.getElementById("waypoint-table");
-    waypointsText.innerHTML += `<br><tb id=${place.place_id} name=entry>` + newText + "</tb>";
+    waypointsText.innerHTML += `<tb id=${place.place_id} name=entry>` + newText + "</tb>";
 
     const parent = document.getElementById(place.place_id);
     const button = document.createElement("button");
@@ -166,6 +166,10 @@ async function removePoint(value, type) {
 }
 
 async function getDirections() {
+  if (start.address === null) { alert("Please select a start point"); return; }
+  if (end.address === null) { alert("Please select an end point"); return; }
+  if (waypoints.length === 0) { alert("Please select at least one waypoint"); return; }
+
   let url = "https://maps.googleapis.com/maps/api/directions/json?";
   url += "origin=place_id:" + start.id;
   url += "&destination=place_id:" + end.id;
@@ -195,15 +199,19 @@ async function getDirections() {
       directionsRenderer.setDirections(response);
       res = response;
     })
-  
+    .catch((error) => { 
+      alert("Failed to get directions");
+    });
+
+
   const legs = res.routes[0].legs;
   let time = 0;
   let distance = 0;
   legs.forEach((leg) => { time += leg.duration.value; distance += leg.distance.value; });
   time /= 60;
   distance /= 1609.344;
-  
-  console.log(res);
+  const disttime = document.getElementById("distance+time");
+  disttime.innerHTML = `<p1>Distance: ${distance.toFixed(1)} miles</p1><br><p1>Time: ${time.toFixed(1)} minutes</p1>`;
 }
 
 window.initMap = initMap;
