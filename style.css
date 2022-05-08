@@ -1,0 +1,100 @@
+#input {
+  width: 50%;
+  height: 150px;
+  float:left;
+}
+
+#input-display{
+  height: 150px;
+  width: 50%;
+  float:left;
+}
+
+#panel {
+  display: flex;
+  height: 100%;
+}
+
+input {
+  border: 0;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+input:focus::placeholder {
+  color: white;
+}
+
+#location-input{
+  width: 500px;
+}
+
+#map {
+  filter: invert(100%);
+  width: 100%;
+  height: 77%;
+  float: bottom;
+}
+
+#add {
+  filter: invert(100%);
+  height: 25px;
+  width: 50px;
+  background: #3367d6;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.48);
+  cursor: pointer;
+}
+
+#submit {
+  filter: invert(100%);
+  height: 25px;
+  width: 150px;
+  background: #3367d6;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.48);
+  cursor: pointer;
+}
+
+
+html{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: Bold;
+}
+
+body {
+  filter: invert(100%);
+  background-color: #000000;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}

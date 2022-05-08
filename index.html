@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Best Route</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./index.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id="input">
+        <br>
+        <div class="panel">
+            <input type="text" placeholder="Address" id="location-input" />
+        </div>
+
+        <form id="type-input">
+            <input type="radio" name="point-type" value="Start"> Start
+
+            <input type="radio" name="point-type" value="End"> End
+
+            <input type="radio" name="point-type" value="Waypoint"> Waypoint
+        </form>
+        <button id="add" onclick="addPoint()">Add</button>
+    </div>
+    <br>
+    <div id="input-display">
+        <div id="start-text"></div>
+        <button id="remove-button-start" onclick="removePoint(this.value, 'Start')" hidden="true">Remove</button>
+        <br>
+        <div id="end-text"></div>
+        <button id="remove-button-end" onclick="removePoint(this.value, 'End')" hidden="true">Remove</button>
+        <table>
+            <tr id="waypoint-table"></tr>
+        </table>
+        <button id="submit" hidden="true" onclick="getDirections()">Calculate Route</button>
+    </div>
+
+    <div id="output-display">
+        <div id="title">Recommended Order: </div>
+    </div>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC873DyHcGuy0EQDvCLHQGbZsnIQp-nifI&callback=initMap&libraries=places"
+        defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+        defer></script>
+</body>
+
+</html>
