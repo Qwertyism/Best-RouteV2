@@ -37,11 +37,13 @@
     </div>
     <br>
     <div id="input-display">
-        <div id="start-text"></div>
-        <button id="remove-button-start" onclick="removePoint(this.value, 'Start')" hidden="true">Remove</button>
-        <br>
-        <div id="end-text"></div>
-        <button id="remove-button-end" onclick="removePoint(this.value, 'End')" hidden="true">Remove</button>
+        <span>
+            <div id="start-text"></div>
+            <button id="remove-button-start" onclick="removePoint(this.value, 'Start')" hidden="true">Remove</button>
+            <br>
+            <div id="end-text"></div>
+            <button id="remove-button-end" onclick="removePoint(this.value, 'End')" hidden="true">Remove</button>
+        </span>
         <table>
             <tr id="waypoint-table"></tr>
         </table>
