@@ -98,3 +98,11 @@ body {
   line-height: 30px;
   padding-left: 10px;
 }
+
+#start-text{
+  float:left;
+}
+
+#end-text{
+  float:left;
+}
