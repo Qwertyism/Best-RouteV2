@@ -15,6 +15,39 @@
   height: 100%;
 }
 
+#dir{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#directions-panel {
+  width: 49%;
+  height: 77%;
+  float:left;
+  margin-left: 10px;
+}
+
+#dir-content {
+  height: 77%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#clear{
+  filter: invert(100%);
+  height: 25px;
+  width: 60px;
+  background: #3367d6;
+  color: white;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.48);
+  cursor: pointer;
+}
+
 input {
   border: 0;
   border-bottom: 1px solid black;
@@ -34,9 +67,9 @@ input:focus::placeholder {
 
 #map {
   filter: invert(100%);
-  width: 100%;
+  width: 50%;
   height: 77%;
-  float: bottom;
+  float: left;
 }
 
 #add {
@@ -78,6 +111,7 @@ html{
 }
 
 body {
+  overflow: hidden;
   filter: invert(100%);
   background-color: #000000;
   height: 100%;
@@ -97,4 +131,12 @@ body {
   font-family: "Roboto", "sans-serif";
   line-height: 30px;
   padding-left: 10px;
+}
+
+#start-text{
+  float:left;
+}
+
+#end-text{
+  float:left;
 }

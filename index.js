@@ -1,4 +1,4 @@
-const MAP_KEY = "AIzaSyC873DyHcGuy0EQDvCLHQGbZsnIQp-nifI";
+const MAP_KEY = "AIzaSyB3_knkECqKGBoU2zv9JNzOAHiKfCpmhmw";
 
 let end = {};
 let start = {};
@@ -13,7 +13,7 @@ let directionsRenderer;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 39.3071254400342, lng: -96.49056091082392 },
-    zoom: 5,
+    zoom: 4,
   });
 
   addEventListener('load', function () {
@@ -90,7 +90,7 @@ async function addPoint() {
     let newText = `Stop ${waypoints.length}: ${address}`;
 
     const waypointsText = document.getElementById("waypoint-table");
-    waypointsText.innerHTML += `<tb id=${place.place_id} name=entry>` + newText + "</tb>";
+    waypointsText.innerHTML += `<tb id=${place.place_id} name=entry>` + newText + "</tb><br>";
 
     const parent = document.getElementById(place.place_id);
     const button = document.createElement("button");
@@ -159,7 +159,7 @@ async function removePoint(value, type) {
       markers.splice(i, 1);
       if (markers.length != 0) { map.setCenter(markers[0].getPosition()); return; }
       map.setCenter({ lat: 39.3071254400342, lng: -96.49056091082392 });
-      map.setZoom(5);
+      map.setZoom(4);
       return;
     }
   }
@@ -170,16 +170,6 @@ async function getDirections() {
   if (end.address === null) { alert("Please select an end point"); return; }
   if (waypoints.length === 0) { alert("Please select at least one waypoint"); return; }
 
-  let url = "https://maps.googleapis.com/maps/api/directions/json?";
-  url += "origin=place_id:" + start.id;
-  url += "&destination=place_id:" + end.id;
-  url += "&waypoints=optimize:true";
-
-  waypoints.forEach((waypoint) => {
-    url += "|place_id:" + waypoint.id;
-  });
-
-  url += `&key=${MAP_KEY}`
   const waypts = []
   waypoints.forEach((waypoint) => {
     waypts.push({ location: waypoint.address, stopover: true })
@@ -199,19 +189,73 @@ async function getDirections() {
       directionsRenderer.setDirections(response);
       res = response;
     })
-    .catch((error) => { 
+    .catch((error) => {
       alert("Failed to get directions");
     });
 
 
   const legs = res.routes[0].legs;
-  let time = 0;
+  let dir = "";
+  for (let i = 0; i < legs.length; i++) {
+    const steps = legs[i].steps;
+    let leg = "";
+    for (let j = 0; j < steps.length; j++) {
+      leg += steps[j].instructions + "<br>";
+    }
+    leg = `<em>Stop ${i + 1}: ${legs[i].end_address}</em><br>` + leg;
+    dir += leg;
+  }
+  const directions = document.getElementById("dir-content");
+  directions.innerHTML = dir;
+  directions.hidden = false;
+
+  let sec = 0; let min = 0; let hour = 0;
   let distance = 0;
-  legs.forEach((leg) => { time += leg.duration.value; distance += leg.distance.value; });
-  time /= 60;
+  legs.forEach((leg) => { sec += leg.duration.value; distance += leg.distance.value; });
+  while (sec >= 60) { min++; sec -= 60; }
+  while (min >= 60) { hour++; min -= 60; }
+  let time;
+  if (hour > 0) { time = `${hour.toFixed(0) } hour(s), ${min.toFixed(0)} minute(s), and ${sec.toFixed(0)} second(s)`; }
+  else if (min > 0) { time = `${min.toFixed(0) } minute(s), and ${sec.toFixed(0)} second(s)`; }
+  else { time = `${sec.toFixed(0)} second(s)`; }
+
   distance /= 1609.344;
   const disttime = document.getElementById("distance+time");
-  disttime.innerHTML = `<p1>Distance: ${distance.toFixed(1)} miles</p1><br><p1>Time: ${time.toFixed(1)} minutes</p1>`;
+  disttime.innerHTML = `<br><p1>Total Distance: ${distance.toFixed(1)} miles</p1><br><p1>Time: ${time} </p1>`;
+  const b = document.getElementById("clear");
+  b.hidden = false;
+}
+
+function reset() {
+  const radioButtons = document.querySelectorAll('input[name="point-type"]');
+  radioButtons.forEach((button) => { button.disabled = false; });
+  markers.forEach((marker) => { marker.setMap(null); });
+  markers = [];
+  start = { address: null, id: null };
+  end = { address: null, id: null };
+  waypoints = [];
+  directionsRenderer.setDirections({ routes: [] });
+  const directions = document.getElementById("dir-content");
+  directions.innerHTML = "";
+  directions.hidden = true;
+  const disttime = document.getElementById("distance+time");
+  disttime.innerHTML = "";
+  const b = document.getElementById("clear");
+  b.hidden = true;
+  const startText = document.getElementById("start-text");
+  startText.innerHTML = "";
+  const endText = document.getElementById("end-text");
+  endText.innerHTML = "";
+  const wpTable = document.getElementById("waypoint-table");
+  wpTable.innerHTML = "";
+  const submit = document.getElementById("submit");
+  submit.hidden = true;
+  const startB = document.getElementById("remove-button-start");
+  startB.hidden = true;
+  const endB = document.getElementById("remove-button-end");
+  endB.hidden = true;
+  map.setCenter({ lat: 39.3071254400342, lng: -96.49056091082392 });
+  map.setZoom(4);
 }
 
 window.initMap = initMap;

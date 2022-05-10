@@ -19,6 +19,13 @@
 
 <body>
     <div id="map"></div>
+    <div id="directions-panel">
+        <p1 id="dir">Directions:</p1>
+        <div id="dir-content" hidden="true"></div>
+        <div>
+            <div id="distance+time"></div>
+        </div>
+    </div>
 
     <div id="input">
         <br>
@@ -46,12 +53,10 @@
             <tr id="waypoint-table"></tr>
         </table>
         <button id="submit" hidden="true" onclick="getDirections()">Calculate Route</button>
-    </div>
-    <div>
-        <div id="distance+time"></div>
+        <button id="clear" type="reset" hidden="true" onclick="reset()">Clear</button>
     </div>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC873DyHcGuy0EQDvCLHQGbZsnIQp-nifI&callback=initMap&libraries=places"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3_knkECqKGBoU2zv9JNzOAHiKfCpmhmw&callback=initMap&libraries=places"
         defer></script>
 </body>
 
