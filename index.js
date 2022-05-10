@@ -87,7 +87,7 @@ async function addPoint() {
 
   if (chosenType === "Waypoint") {
     waypoints.push({ address: address, id: place.place_id });
-    let newText = `Stop ${waypoints.length}: ${address}`;
+    let newText = `<br>Stop ${waypoints.length}: ${address}`;
 
     const waypointsText = document.getElementById("waypoint-table");
     waypointsText.innerHTML += `<tb id=${place.place_id} name=entry>` + newText + "</tb><br>";
